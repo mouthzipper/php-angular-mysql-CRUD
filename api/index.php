@@ -5,18 +5,32 @@ require 'Slim/Slim.php';
 $app = new Slim();
 $app->get('/products', 'getProducts');// get all the products
 $app->post('/add_product', 'addProduct'); // add product
-$app->delete('/products/:id', 'deleteProduct' );// dekete specifi product
+$app->put('/delete_product/:id', 'deleteProduct' );// dekete specifi product
+$app->get('/get_product/:id', 'getProduct'); // get product by id
+$app->put('/edit_product/:id', 'updateProduct' );
 
 $app->run();
 
 function getProducts() {
-	$sql = "select * FROM products ORDER BY product_id";
+	$sql = "select * FROM products WHERE deleted=0 ORDER BY product_id";
 	try {
 		$db = getConnection();
 		$stmt = $db->query($sql);  
 		$products = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
 		echo json_encode($products);
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+function getProduct( $id ) {
+	$sql = "select * FROM products WHERE product_id=".$id." ORDER BY product_id";
+	try {
+		$db = getConnection();
+		$stmt = $db->query($sql);  
+		$product = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo json_encode($product);
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
@@ -36,20 +50,39 @@ function addProduct() {
 		$stmt->execute();
 		$status->id = $db->lastInsertId();
 		$db = null;
-		echo json_encode($status);
+		echo json_encode($product);
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
 
 function deleteProduct($id) {
-	$sql = "DELETE FROM products WHERE product_id=".$id;
+	$sql = "UPDATE products SET deleted=1 WHERE product_id=".$id;
 	try {
 		$db = getConnection();
 		$stmt = $db->query($sql);  
-		$productstmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		echo json_encode($products);
+		getProducts();
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
+
+function updateProduct($id) {
+	$request = Slim::getInstance()->request();
+	$product = json_decode($request->getBody());
+	$sql = "UPDATE products SET product_name=:name, product_description=:description, product_price=:price, product_stock=:stock WHERE product_id=:id";
+	try {
+		$db = getConnection();
+		$stmt = $db->prepare($sql);  
+		$stmt->bindParam("name", $product->product_name);
+		$stmt->bindParam("description", $product->product_description);
+		$stmt->bindParam("price", $product->product_price);
+		$stmt->bindParam("stock", $product->product_stock);
+		$stmt->bindParam("id", $id);
+		$stmt->execute();
+		$db = null;
+		echo json_encode($product); 
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}

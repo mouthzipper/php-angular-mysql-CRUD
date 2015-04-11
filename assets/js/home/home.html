@@ -16,7 +16,7 @@
       <td>{{product.product_price}}</td>
       <td>{{product.product_stock}}</td>
       <td><a ui-sref="edit( { id : product.product_id} )" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp; &nbsp;|&nbsp;&nbsp;
-        <button ng-click="vm.deleteProduct(product)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button></td>
+        <button ng-click="vm.deleteProduct(product.product_id)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button></td>
     </tr>
   </tbody>
 </table>

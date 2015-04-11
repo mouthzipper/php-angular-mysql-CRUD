@@ -17,9 +17,9 @@
 	    	})
 
 	    	.state('edit', {
-		     	url: '/edit:id',
+		     	url: '/edit/:id',
 		    	templateUrl: 'assets/js/edit/edit.html',
-		    	controller: 'editCtrl',
+		    	controller: 'EditCtrl',
 		    	controllerAs: 'vm'
 	    	})
 
