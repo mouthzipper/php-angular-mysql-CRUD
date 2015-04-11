@@ -5,6 +5,7 @@ require 'Slim/Slim.php';
 $app = new Slim();
 $app->get('/products', 'getProducts');// get all the products
 $app->post('/add_product', 'addProduct'); // add product
+$app->delete('/products/:id', 'deleteProduct' );// dekete specifi product
 
 $app->run();
 
@@ -35,13 +36,24 @@ function addProduct() {
 		$stmt->execute();
 		$status->id = $db->lastInsertId();
 		$db = null;
-
 		echo json_encode($status);
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
 }
 
+function deleteProduct($id) {
+	$sql = "DELETE FROM products WHERE product_id=".$id;
+	try {
+		$db = getConnection();
+		$stmt = $db->query($sql);  
+		$productstmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;
+		echo json_encode($products);
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+	}
+}
 
 function getConnection() {
 	$dbhost="localhost";

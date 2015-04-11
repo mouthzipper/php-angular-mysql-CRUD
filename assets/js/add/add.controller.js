@@ -11,6 +11,7 @@
 		  			console.log( data );
 		  			$state.go( 'edit' );
 		  		});
+		  	$state.go( 'home' );
 		}
 	}
 
