@@ -1,7 +1,7 @@
 ( function () {
 	'use strict';
 
-	function EditCtr( $http ) {
+	function EditCtrl( $http ) {
 		var vm = this;
 		vm.users = {};
 	  	$http.get('api/users' )

@@ -2,7 +2,7 @@
 	'use strict';
 	function configRoutes( $stateProvider, $urlRouterProvider ) {
 		$stateProvider
-	    	.state('home', {
+	    	.state( 'home', {
 		     	url: '/home',
 		    	templateUrl: 'assets/js/home/home.html',
 		    	controller: 'HomeCtrl',

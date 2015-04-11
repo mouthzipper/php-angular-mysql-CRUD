@@ -16,10 +16,10 @@
     </div>
     <div class="form-group">
       <label for="address">Stocks:</label>
-      <input class="form-control" type="text" ng-model="product.stock" />
+      <input class="form-control" type="text" ng-model="product.stock" required/>
     </div>
-    <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(product)" id="add-new-btn" ng-click="add_new(product)">Save!</button>
-    <a href="#/" class="btn">Cancel</a>
+    <button class="btn btn-primary" ng-disabled="AddNewForm.$pristine || AddNewForm.$invalid" id="add-new-btn" ng-click="vm.addNew(product)">Save</button>
+    <a ui-sref="home" class="btn">Cancel</a>
   </form>
 </div>
 </div>
