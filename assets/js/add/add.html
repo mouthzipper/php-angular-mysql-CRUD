@@ -1,0 +1,25 @@
+<h2>Add new Product</h2>
+<div class="row">
+  <div class="col-md-6">
+  <form novalidate name="AddNewForm" id="add-new-form" method="post" action="">
+    <div class="form-group">
+      <label for="username">Name:</label>
+      <input class="form-control" type="text" ng-model="product.name" required />
+    </div>
+    <div class="form-group">
+      <label for="first_name">Description:</label>
+      <textarea class="form-control" ng-model="product.description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="last_name">Price:</label>
+      <input class="form-control" type="text" ng-model="product.price" required />
+    </div>
+    <div class="form-group">
+      <label for="address">Stocks:</label>
+      <input class="form-control" type="text" ng-model="product.stock" />
+    </div>
+    <button class="btn btn-primary" ng-disabled="AddNewForm.$invalid || isUnchanged(product)" id="add-new-btn" ng-click="add_new(product)">Save!</button>
+    <a href="#/" class="btn">Cancel</a>
+  </form>
+</div>
+</div>
