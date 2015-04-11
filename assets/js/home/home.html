@@ -1,23 +1,25 @@
-  <h2>Products</h2>
-<table class="table table-condensed">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Avaible Stocks</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="product in vm.products">
-      <td>{{product.product_name}}</td>
-      <td>{{product.product_description}}</td>
-      <td>{{product.product_price}}</td>
-      <td>{{product.product_stock}}</td>
-      <td><a ui-sref="edit( { id : product.product_id} )" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>&nbsp; &nbsp;|&nbsp;&nbsp;
-        <button ng-click="vm.deleteProduct(product.product_id)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button></td>
-    </tr>
-  </tbody>
-</table>
-<a class="btn btn-primary" ui-sref="add">Add New Product</a>
+<h2>Products</h2>
+<a class="btn btn-primary pull-right" ui-sref="add">Add New Product</a>
+<div id="no-more-tables">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Avaible Stocks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="product in vm.products">
+        <td>{{product.product_name}}</td>
+        <td>{{product.product_description}}</td>
+        <td>{{product.product_price}}</td>
+        <td>{{product.product_stock}}</td>
+        <td><a ui-sref="edit( { id : product.product_id} )" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-pencil"></i></a>
+          <button ng-click="vm.deleteProduct(product.product_id)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

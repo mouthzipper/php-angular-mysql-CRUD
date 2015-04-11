@@ -1,8 +1,10 @@
 <?php
 
 require 'Slim/Slim.php';
+\Slim\Slim::registerAutoloader();
 
-$app = new Slim();
+$app = new \Slim\Slim();
+
 $app->get('/products', 'getProducts');// get all the products
 $app->post('/add_product', 'addProduct'); // add product
 $app->put('/delete_product/:id', 'deleteProduct' );// dekete specifi product
@@ -37,7 +39,7 @@ function getProduct( $id ) {
 }
 
 function addProduct() {
-	$request = Slim::getInstance()->request();
+	$request = \Slim\Slim::getInstance()->request();
 	$product = json_decode($request->getBody());
 	$sql = "INSERT INTO products (product_name, product_description, product_price, product_stock) VALUES (:product_name, :product_description, :product_price, :product_stock)";
 	try {
@@ -68,7 +70,7 @@ function deleteProduct($id) {
 }
 
 function updateProduct($id) {
-	$request = Slim::getInstance()->request();
+	$request = \Slim\Slim::getInstance()->request();
 	$product = json_decode($request->getBody());
 	$sql = "UPDATE products SET product_name=:name, product_description=:description, product_price=:price, product_stock=:stock WHERE product_id=:id";
 	try {
