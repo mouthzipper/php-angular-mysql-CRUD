@@ -12,7 +12,8 @@
 
 	  	function update( product ) {
 	  		$http.put( BASE_URL + 'api/edit_product/' + id, product )
-	  			.success( function () {
+	  			.success( function ( data ) {
+	  				console.log( data );
 	  				$state.go( 'home' );
 	  			} );
 	  	}

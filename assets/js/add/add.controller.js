@@ -7,7 +7,7 @@
 
 		function addNew( product ) {
 			$http.post( BASE_URL + 'api/add_product', product )
-		  		.success( function() {
+		  		.success( function( data)  {
 		  			$state.go( 'home' );
 		  		});
 		}

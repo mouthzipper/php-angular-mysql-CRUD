@@ -47,10 +47,9 @@ function addProduct() {
 		$stmt->bindParam("product_description", $product->description);
 		$stmt->bindParam("product_price", $product->price);
 		$stmt->bindParam("product_stock", $product->stock);
-		$stmt->execute();
-		$status->id = $db->lastInsertId();
+		$status = $stmt->execute();	
 		$db = null;
-		echo json_encode($product);
+		echo '{"status":'.$status.'}';
 	} catch(PDOException $e) {
 		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}

@@ -18,7 +18,7 @@
       <label for="address">Stocks:</label>
       <input class="form-control" type="text" ng-model="vm.product.product_stock" />
     </div>
-    <button class="btn btn-primary" ng-disabled="EditForm.$invalid || EditForm.$pristine" id="add-new-btn" ng-click="vm.update(vm.product)">Update</button>
+    <button class="btn btn-primary" ng-disabled="EditForm.$invalid || EditForm.$pristine" ng-click="vm.update(vm.product)">Update</button>
      <a ui-sref="home" class="btn">Cancel</a>
   </form>
 </div>
