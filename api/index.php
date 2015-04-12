@@ -4,7 +4,9 @@ require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
-
+$app->get('/do_login', 'doLogin'  ); //login
+$app->get( 'is_login', 'isLogin' ); //check if login\
+$app->get( 'logout', 'logout' ); // logout
 $app->get('/products', 'getProducts');// get all the products
 $app->post('/add_product', 'addProduct'); // add product
 $app->put('/delete_product/:id', 'deleteProduct' );// dekete specifi product
@@ -12,6 +14,43 @@ $app->get('/get_product/:id', 'getProduct'); // get product by id
 $app->put('/edit_product/:id', 'updateProduct' );
 
 $app->run();
+function isLogin() {
+	session_start();
+	if(isset($_SESSION['username']) && !empty($_SESSION['username']))
+		echo '{"isLogin": true}';
+	else
+		echo '{"isLogin": false}';
+}
+function logout() {
+	session_start();
+	session_destroy();
+}
+function doLogin() {
+
+	$request = \Slim\Slim::getInstance()->request();
+	$user = json_decode($request->getBody());	
+	
+	try {
+		$db = getDB();		
+		$stmt = $db->prepare("SELECT * FROM users WHERE username=:username AND password=:password");
+		$stmt->bindValue(':username', $user->username, PDO::PARAM_INT);
+		$stmt->bindValue(':password', $user->password, PDO::PARAM_STR);
+		$stmt->execute();
+		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);		
+		$db = null;
+		
+		if(count($rows)) {			
+			session_start();
+			$_SESSION['username'] =  $user->username;
+			echo '{"status": "success"}';
+		}
+		else
+			echo '{"status": "failed"}';
+	} catch(PDOException $e) {	    
+		echo '{"error":{"msg":'. $e->getMessage() .'}}'; 
+	}
+	
+}
 
 function getProducts() {
 	$sql = "select * FROM products WHERE deleted=0 ORDER BY product_id";
