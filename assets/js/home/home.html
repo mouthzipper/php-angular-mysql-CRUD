@@ -25,3 +25,36 @@
       </table>
     </div>
 </div>
+<div ng-show="!home.isAuthenticated">
+  <div class="row lrj_row-sm-offset-3">
+      <div class="col-xs-12 col-sm-6">
+        <h1>Login
+        <hr>
+      </div>
+    </div>
+
+    <div class="row lrj_row-sm-offset-3">
+      <div class="col-xs-12 col-sm-6">  
+         <form name="loginForm" ng-submit="home.login()" novalidate>
+          <div class="form-group has-feedback" ng-class="{ 'has-error': loginForm.email.$invalid && loginForm.email.$dirty }">
+            <input server-error class="form-control input-lg" type="email" name="email" ng-model="home.user.email" placeholder="email" required autofocus>
+            <span class="ion-at form-control-feedback"></span>
+            <div class="help-block" ng-if="home.loginForm.email.$dirty" ng-messages="home.loginForm.email.$error">
+              <div ng-message="server">{{login.errorMessage.email}}</div>
+            </div>
+          </div>
+
+          <div class="form-group has-feedback" ng-class="{ 'has-error': loginForm.password.$invalid && loginForm.password.$dirty }">
+            <input server-error class="form-control input-lg" type="password" name="password" ng-model="home.user.password" placeholder="Password" required>
+            <span class="ion-key form-control-feedback"></span>
+            <div class="help-block" ng-if="home.loginForm.password.$dirty" ng-messages="home.loginForm.password.$error">
+              <div ng-message="required">Please enter your password</div>
+              <div ng-message="server">{{login.errorMessage.password}}</div>
+            </div>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-success" ng-disabled="loginForm.$invalid">Log in</button>
+          </form>
+      </div>
+      </div> 
+</div>
