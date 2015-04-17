@@ -4,12 +4,23 @@
 	function HomeCtrl( $http, BASE_URL ) {
 		var vm = this;
 		vm.deleteProduct= deleteProduct;
+		vm.isAuthenticated = false;
 
+		$http.get( BASE_URL + 'api/is_login' ) 
+			.success( function ( data ) {
+				if( data.isLogin === true ) {
+					vm.isAuthenticated = true;
+					loadData();
+				}
+			} )
 
-	  	$http.get( BASE_URL  +'api/products' )
+		function loadData() {
+			$http.get( BASE_URL  +'api/products' )
 	  		.success( function(data) {
 	  			vm.products = data;
-	  		});
+	  		});	
+		}
+	  	
 	  	function deleteProduct( id ) {
 	  		var deleteIt = confirm('Are you absolutely sure you want to delete?');
 		    if ( deleteIt) {

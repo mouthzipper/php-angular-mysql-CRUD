@@ -5,7 +5,7 @@ require 'Slim/Slim.php';
 
 $app = new \Slim\Slim();
 $app->get('/do_login', 'doLogin'  ); //login
-$app->get( 'is_login', 'isLogin' ); //check if login\
+$app->get( '/is_login', 'isLogin' ); //check if login\
 $app->get( 'logout', 'logout' ); // logout
 $app->get('/products', 'getProducts');// get all the products
 $app->post('/add_product', 'addProduct'); // add product
@@ -16,7 +16,7 @@ $app->put('/edit_product/:id', 'updateProduct' );
 $app->run();
 function isLogin() {
 	session_start();
-	if(isset($_SESSION['username']) && !empty($_SESSION['username']))
+	if( isset($_SESSION['username']) && !empty($_SESSION['username']))
 		echo '{"isLogin": true}';
 	else
 		echo '{"isLogin": false}';
