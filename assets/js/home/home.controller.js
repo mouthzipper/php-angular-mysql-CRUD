@@ -5,6 +5,9 @@
 		var vm = this;
 		vm.deleteProduct= deleteProduct;
 		vm.isAuthenticated = false;
+		vm.login = login;
+		vm.user;
+
 
 		$http.get( BASE_URL + 'api/is_login' ) 
 			.success( function ( data ) {
@@ -29,6 +32,10 @@
 		      		vm.products= data;
 		      	});
 		    }	
+	  	}
+
+	  	function login() {
+	  		console.log( vm.user );
 	  	}
 	}
 
