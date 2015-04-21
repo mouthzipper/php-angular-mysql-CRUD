@@ -35,7 +35,11 @@
 	  	}
 
 	  	function login() {
-	  		console.log( vm.user );
+	  		$http.post( BASE_URL + 'api/do_login', vm.user )
+	  			.success( function ( data ) {
+	  				vm.isAuthenticated= true;
+	  				loadData();
+	  			} )
 	  	}
 	}
 

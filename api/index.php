@@ -4,14 +4,14 @@ require 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 $app = new \Slim\Slim();
-$app->get('/do_login', 'doLogin'  ); //login
+$app->post( '/do_login', 'doLogin'  ); //login
 $app->get( '/is_login', 'isLogin' ); //check if login\
 $app->get( 'logout', 'logout' ); // logout
-$app->get('/products', 'getProducts');// get all the products
-$app->post('/add_product', 'addProduct'); // add product
-$app->put('/delete_product/:id', 'deleteProduct' );// dekete specifi product
-$app->get('/get_product/:id', 'getProduct'); // get product by id
-$app->put('/edit_product/:id', 'updateProduct' );
+$app->get( '/products', 'getProducts');// get all the products
+$app->post( '/add_product', 'addProduct'); // add product
+$app->put( '/delete_product/:id', 'deleteProduct' );// dekete specifi product
+$app->get( '/get_product/:id', 'getProduct'); // get product by id
+$app->put( '/edit_product/:id', 'updateProduct' );
 
 $app->run();
 function isLogin() {
@@ -26,30 +26,30 @@ function logout() {
 	session_destroy();
 }
 function doLogin() {
-
-	$request = \Slim\Slim::getInstance()->request();
-	$user = json_decode($request->getBody());	
 	
+	$request = \Slim\Slim::getInstance()->request();
+	$user = json_decode($request->getBody());
+
+	$sql = "SELECT * FROM users WHERE username=:username AND password=:password";
 	try {
-		$db = getDB();		
-		$stmt = $db->prepare("SELECT * FROM users WHERE username=:username AND password=:password");
-		$stmt->bindValue(':username', $user->username, PDO::PARAM_INT);
-		$stmt->bindValue(':password', $user->password, PDO::PARAM_STR);
+		$db = getConnection();
+		$stmt = $db->prepare($sql);  
+		$stmt->bindParam("username", $user->username);
+		$stmt->bindParam("password", $user->password);
 		$stmt->execute();
-		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);		
+		$rows = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
-		
 		if(count($rows)) {			
 			session_start();
 			$_SESSION['username'] =  $user->username;
-			echo '{"status": "success"}';
+			echo '{"status": "success", "username" : $user->username }';
 		}
-		else
+		else {
 			echo '{"status": "failed"}';
-	} catch(PDOException $e) {	    
-		echo '{"error":{"msg":'. $e->getMessage() .'}}'; 
+		}  
+	} catch(PDOException $e) {
+		echo '{"error":{"text":'. $e->getMessage() .'}}'; 
 	}
-	
 }
 
 function getProducts() {
