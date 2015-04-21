@@ -6,7 +6,7 @@ require 'Slim/Slim.php';
 $app = new \Slim\Slim();
 $app->post( '/do_login', 'doLogin'  ); //login
 $app->get( '/is_login', 'isLogin' ); //check if login\
-$app->get( 'logout', 'logout' ); // logout
+$app->get( '/logout', 'logout' ); // logout
 $app->get( '/products', 'getProducts');// get all the products
 $app->post( '/add_product', 'addProduct'); // add product
 $app->put( '/delete_product/:id', 'deleteProduct' );// dekete specifi product
@@ -37,12 +37,13 @@ function doLogin() {
 		$stmt->bindParam("username", $user->username);
 		$stmt->bindParam("password", $user->password);
 		$stmt->execute();
-		$rows = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$db = null;
-		if(count($rows)) {			
+		if( count($rows) ) {	
 			session_start();
 			$_SESSION['username'] =  $user->username;
-			echo '{"status": "success", "username" : $user->username }';
+			
+			echo '{"status": "success"}';
 		}
 		else {
 			echo '{"status": "failed"}';

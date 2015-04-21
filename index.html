@@ -8,39 +8,7 @@
   <link rel="stylesheet"  href="assets/styles/main.css">
   <link rel="stylesheet" href="assets/vendor/angular-loading/loading-bar.min.css">
 <body>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HomeCtrl as home">
     <div class="container">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand text-uppercase" ui-sref="home">php  <span class="label label-success text-capitalize">CRUD</span></a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="navigation">
-          <ul class="nav navbar-nav navbar-right">
-              <li ng-if="!home.isAuthenticated "><a ui-sref="login">Log in</a></li>
-              <li ng-if="!home.isAuthenticated"><button type="button" class="btn btn-success navbar-btn btn-circle" ui-sref="signup" >Sign up</button></li>
-              <li ng-if="home.isAuthenticated && home.username">
-                <a href="#">
-                <img class="media-object img-rounded" ng-src="../../images/gulp-tiny.png" height="25" width="50">
-                @{{home.username}}
-                </a>
-               </li>
-        <li ng-if="home.isAuthenticated"><a href="#" ng-click="home.logout()">Logout</a></li>
-          </ul>
-      </div>
-    </div>
-  </nav>
-
-    <div class="container">
-
       <!-- Main component for a primary marketing message or call to action -->
         <div ui-view>
       </div>

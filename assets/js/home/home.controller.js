@@ -6,6 +6,7 @@
 		vm.deleteProduct= deleteProduct;
 		vm.isAuthenticated = false;
 		vm.login = login;
+		vm.logout = logout;
 		vm.user;
 
 
@@ -16,6 +17,16 @@
 					loadData();
 				}
 			} )
+
+		function login() {
+	  		$http.post( BASE_URL + 'api/do_login', vm.user )
+	  			.then( function ( response ) {
+	  				if(  response.data.status === 'success' ) {
+	  					vm.isAuthenticated = true;
+	  					loadData();
+	  				}
+	  			} )
+	  	}
 
 		function loadData() {
 			$http.get( BASE_URL  +'api/products' )
@@ -34,12 +45,13 @@
 		    }	
 	  	}
 
-	  	function login() {
-	  		$http.post( BASE_URL + 'api/do_login', vm.user )
-	  			.success( function ( data ) {
-	  				vm.isAuthenticated= true;
-	  				loadData();
-	  			} )
+	  	function logout() {
+	  			if(confirm('Are you sure want to logout?')) {
+					$http.get( BASE_URL + 'api/logout' )
+						.success( function ( ) {
+							vm.isAuthenticated = false;
+						} )
+				}
 	  	}
 	}
 
