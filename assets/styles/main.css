@@ -2,3 +2,16 @@ body {
   min-height: 2000px;
   padding-top: 70px;
 }
+footer {
+	 bottom: 0;
+    height: 78px;
+    position: absolute;
+    width: 100%;
+	 background-color: #ebf1f7;
+    border-top: 1px solid #e2e6ed;
+    color: #96a1a4;
+    font-size: 14px;
+    min-height: 78px;
+    padding-top: 20px;
+    text-align: center;
+}
